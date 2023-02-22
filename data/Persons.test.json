@@ -1,0 +1,99 @@
+{
+  "persons": [
+    {
+      "personCode": "cb9e5d00",
+      "firstName": "Beard",
+      "lastName": "Booker",
+      "address": {
+        "street": "Caton Place",
+        "city": "Alleghenyville",
+        "state": "OR",
+        "zip": "88025",
+        "country": "NZ"
+      },
+      "emails": [
+        "beardbooker@opticom.com",
+        "beardbooker@opticom.com",
+        "beardbooker@opticom.com"
+      ]
+    },
+    {
+      "personCode": "1f65ea36",
+      "firstName": "Edith",
+      "lastName": "Garcia",
+      "address": {
+        "street": "Ocean Avenue",
+        "city": "Foscoe",
+        "state": "ID",
+        "zip": "58753",
+        "country": "FX"
+      },
+      "emails": [
+        "edithgarcia@opticom.com",
+        "edithgarcia@opticom.com"
+      ]
+    },
+    {
+      "personCode": "924725d8",
+      "firstName": "Lessie",
+      "lastName": "Arnold",
+      "address": {
+        "street": "Engert Avenue",
+        "city": "Jessie",
+        "state": "NY",
+        "zip": "59430",
+        "country": "GS"
+      },
+      "emails": [
+        "lessiearnold@opticom.com",
+        "lessiearnold@opticom.com",
+        "lessiearnold@opticom.com",
+        "lessiearnold@opticom.com"
+      ]
+    },
+    {
+      "personCode": "26d41b81",
+      "firstName": "Byers",
+      "lastName": "Vega",
+      "address": {
+        "street": "Centre Street",
+        "city": "Tedrow",
+        "state": "PA",
+        "zip": "54543",
+        "country": "NI"
+      },
+      "emails": [
+        "byersvega@opticom.com",
+        "byersvega@opticom.com",
+        "byersvega@opticom.com",
+        "byersvega@opticom.com"
+      ]
+    },
+    {
+      "personCode": "63407d13",
+      "firstName": "Eunice",
+      "lastName": "Schwartz",
+      "address": {
+        "street": "Madeline Court",
+        "city": "Graniteville",
+        "state": "PW",
+        "zip": "76048",
+        "country": "EE"
+      },
+      "emails": []
+    },
+    {
+      "personCode": "7c83e390",
+      "firstName": "Lenora",
+      "lastName": "Lane",
+      "address": {
+        "street": "Midwood Street",
+        "city": "Hessville",
+        "state": "AL",
+        "zip": "42547",
+        "country": "IL"
+      },
+      "emails": []
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+[
+  {
+    "storeCode": "3c0234",
+    "manager": {
+      "personCode": "fdc267",
+      "firstName": "Staci",
+      "lastName": "Quarry",
+      "address": {
+        "street": "601 Lotheville Road",
+        "city": "Savannah",
+        "state": "GA",
+        "zip": "31405",
+        "country": "US"
+      },
+      "emails": [
+        "squarry0@reverbnation.com",
+        "squarry0@salon.com"
+      ]
+    },
+    "address": {
+      "street": "123 Cornhusker Way",
+      "city": "Lincoln",
+      "state": "NE",
+      "zip": "68508",
+      "country": "US"
+    }
+  },
+  {
+    "storeCode": "9f352c",
+    "manager": {
+      "personCode": "aa887a",
+      "firstName": "Wit",
+      "lastName": "Leavold",
+      "address": {
+        "street": "65337 Straubel Place",
+        "city": "Muncie",
+        "state": "IN",
+        "zip": "47306",
+        "country": "US"
+      },
+      "emails": [
+        "wleavold2@npr.org",
+        "wleavold2@craigslist.org"
+      ]
+    },
+    "address": {
+      "street": "4242 A Street",
+      "city": "Omaha",
+      "state": "NE",
+      "zip": "68117",
+      "country": "US"
+    }
+  },
+  {
+    "storeCode": "73668b",
+    "manager": {
+      "personCode": "fdc267",
+      "firstName": "Staci",
+      "lastName": "Quarry",
+      "address": {
+        "street": "601 Lotheville Road",
+        "city": "Savannah",
+        "state": "GA",
+        "zip": "31405",
+        "country": "US"
+      },
+      "emails": [
+        "squarry0@reverbnation.com",
+        "squarry0@salon.com"
+      ]
+    },
+    "address": {
+      "street": "RR9901",
+      "city": "Mead",
+      "state": "NE",
+      "zip": "61234",
+      "country": "US"
+    }
+  },
+  {
+    "storeCode": "96f2cf",
+    "manager": {
+      "personCode": "fdc267",
+      "firstName": "Staci",
+      "lastName": "Quarry",
+      "address": {
+        "street": "601 Lotheville Road",
+        "city": "Savannah",
+        "state": "GA",
+        "zip": "31405",
+        "country": "US"
+      },
+      "emails": [
+        "squarry0@reverbnation.com",
+        "squarry0@salon.com"
+      ]
+    },
+    "address": {
+      "street": "452 13th Street",
+      "city": "Hastings",
+      "state": "NE",
+      "zip": "68901",
+      "country": "US"
+    }
+  },
+  {
+    "storeCode": "25d901",
+    "manager": {
+      "personCode": "aa887a",
+      "firstName": "Wit",
+      "lastName": "Leavold",
+      "address": {
+        "street": "65337 Straubel Place",
+        "city": "Muncie",
+        "state": "IN",
+        "zip": "47306",
+        "country": "US"
+      },
+      "emails": [
+        "wleavold2@npr.org",
+        "wleavold2@craigslist.org"
+      ]
+    },
+    "address": {
+      "street": "180 Magdeline Plaza",
+      "city": "Wichita",
+      "state": "KS",
+      "zip": "67230",
+      "country": "US"
+    }
+  }
+]
