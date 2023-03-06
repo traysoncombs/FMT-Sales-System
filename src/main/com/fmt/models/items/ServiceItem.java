@@ -5,11 +5,16 @@ import java.util.Objects;
 /**
  * Models a service item.
  */
-public class ServiceInvoiceItem extends InvoiceItem {
-    private final Float hourlyRate;
-    public ServiceInvoiceItem(String code, String name, Float hourlyRate) {
+public class ServiceItem extends Item {
+    private final Double hourlyRate;
+
+    public ServiceItem(String code, String name, Double hourlyRate) {
         super(code, name);
         this.hourlyRate = hourlyRate;
+    }
+
+    public Double getHourlyRate() {
+        return hourlyRate;
     }
 
     @Override
@@ -17,7 +22,7 @@ public class ServiceInvoiceItem extends InvoiceItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        ServiceInvoiceItem that = (ServiceInvoiceItem) o;
+        ServiceItem that = (ServiceItem) o;
         return Objects.equals(hourlyRate, that.hourlyRate);
     }
 

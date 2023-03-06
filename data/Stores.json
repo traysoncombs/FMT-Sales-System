@@ -1,132 +1,163 @@
 [
   {
-    "storeCode": "3c0234",
+    "storeCode": "d36421b9",
     "manager": {
-      "personCode": "fdc267",
-      "firstName": "Staci",
-      "lastName": "Quarry",
+      "personCode": "cb9e5d00",
+      "lastName": "Booker",
+      "firstName": "Beard",
       "address": {
-        "street": "601 Lotheville Road",
-        "city": "Savannah",
-        "state": "GA",
-        "zip": "31405",
-        "country": "US"
+        "street": "Caton Place",
+        "city": "Alleghenyville",
+        "state": "OR",
+        "zip": "88025",
+        "country": "NZ"
       },
       "emails": [
-        "squarry0@reverbnation.com",
-        "squarry0@salon.com"
+        "beardbooker@opticom.com",
+        "beardbooker@opticom.com",
+        "beardbooker@opticom.com"
       ]
     },
     "address": {
-      "street": "123 Cornhusker Way",
-      "city": "Lincoln",
-      "state": "NE",
-      "zip": "68508",
-      "country": "US"
-    }
+      "street": "Wolcott Street",
+      "city": "Blodgett",
+      "state": "CT",
+      "zip": "78052",
+      "country": "LV"
+    },
+    "sales": []
   },
   {
-    "storeCode": "9f352c",
+    "storeCode": "ff772d5e",
     "manager": {
-      "personCode": "aa887a",
-      "firstName": "Wit",
-      "lastName": "Leavold",
+      "personCode": "1f65ea36",
+      "lastName": "Garcia",
+      "firstName": "Edith",
       "address": {
-        "street": "65337 Straubel Place",
-        "city": "Muncie",
-        "state": "IN",
-        "zip": "47306",
-        "country": "US"
+        "street": "Ocean Avenue",
+        "city": "Foscoe",
+        "state": "ID",
+        "zip": "58753",
+        "country": "FX"
       },
       "emails": [
-        "wleavold2@npr.org",
-        "wleavold2@craigslist.org"
+        "edithgarcia@opticom.com",
+        "edithgarcia@opticom.com"
       ]
     },
     "address": {
-      "street": "4242 A Street",
-      "city": "Omaha",
-      "state": "NE",
-      "zip": "68117",
-      "country": "US"
-    }
+      "street": "Landis Court",
+      "city": "Canby",
+      "state": "NM",
+      "zip": "53308",
+      "country": "KW"
+    },
+    "sales": []
   },
   {
-    "storeCode": "73668b",
+    "storeCode": "d7dd7ff0",
     "manager": {
-      "personCode": "fdc267",
-      "firstName": "Staci",
-      "lastName": "Quarry",
+      "personCode": "924725d8",
+      "lastName": "Arnold",
+      "firstName": "Lessie",
       "address": {
-        "street": "601 Lotheville Road",
-        "city": "Savannah",
-        "state": "GA",
-        "zip": "31405",
-        "country": "US"
+        "street": "Engert Avenue",
+        "city": "Jessie",
+        "state": "NY",
+        "zip": "59430",
+        "country": "GS"
       },
       "emails": [
-        "squarry0@reverbnation.com",
-        "squarry0@salon.com"
+        "lessiearnold@opticom.com",
+        "lessiearnold@opticom.com",
+        "lessiearnold@opticom.com",
+        "lessiearnold@opticom.com"
       ]
     },
     "address": {
-      "street": "RR9901",
-      "city": "Mead",
-      "state": "NE",
-      "zip": "61234",
-      "country": "US"
-    }
+      "street": "College Place",
+      "city": "Rossmore",
+      "state": "NC",
+      "zip": "51935",
+      "country": "LC"
+    },
+    "sales": []
   },
   {
-    "storeCode": "96f2cf",
+    "storeCode": "9d0344d9",
     "manager": {
-      "personCode": "fdc267",
-      "firstName": "Staci",
-      "lastName": "Quarry",
+      "personCode": "26d41b81",
+      "lastName": "Vega",
+      "firstName": "Byers",
       "address": {
-        "street": "601 Lotheville Road",
-        "city": "Savannah",
-        "state": "GA",
-        "zip": "31405",
-        "country": "US"
+        "street": "Centre Street",
+        "city": "Tedrow",
+        "state": "PA",
+        "zip": "54543",
+        "country": "NI"
       },
       "emails": [
-        "squarry0@reverbnation.com",
-        "squarry0@salon.com"
+        "byersvega@opticom.com",
+        "byersvega@opticom.com",
+        "byersvega@opticom.com",
+        "byersvega@opticom.com"
       ]
     },
     "address": {
-      "street": "452 13th Street",
-      "city": "Hastings",
-      "state": "NE",
-      "zip": "68901",
-      "country": "US"
-    }
+      "street": "Pulaski Street",
+      "city": "Coalmont",
+      "state": "CT",
+      "zip": "71537",
+      "country": "VC"
+    },
+    "sales": []
   },
   {
-    "storeCode": "25d901",
+    "storeCode": "ec29fc50",
     "manager": {
-      "personCode": "aa887a",
-      "firstName": "Wit",
-      "lastName": "Leavold",
+      "personCode": "63407d13",
+      "lastName": "Schwartz",
+      "firstName": "Eunice",
       "address": {
-        "street": "65337 Straubel Place",
-        "city": "Muncie",
-        "state": "IN",
-        "zip": "47306",
-        "country": "US"
+        "street": "Madeline Court",
+        "city": "Graniteville",
+        "state": "PW",
+        "zip": "76048",
+        "country": "EE"
       },
-      "emails": [
-        "wleavold2@npr.org",
-        "wleavold2@craigslist.org"
-      ]
+      "emails": []
     },
     "address": {
-      "street": "180 Magdeline Plaza",
-      "city": "Wichita",
-      "state": "KS",
-      "zip": "67230",
-      "country": "US"
-    }
+      "street": "Burnett Street",
+      "city": "Mulberry",
+      "state": "DE",
+      "zip": "38345",
+      "country": "MT"
+    },
+    "sales": []
+  },
+  {
+    "storeCode": "3c72a849",
+    "manager": {
+      "personCode": "7c83e390",
+      "lastName": "Lane",
+      "firstName": "Lenora",
+      "address": {
+        "street": "Midwood Street",
+        "city": "Hessville",
+        "state": "AL",
+        "zip": "42547",
+        "country": "IL"
+      },
+      "emails": []
+    },
+    "address": {
+      "street": "Lamont Court",
+      "city": "Bayview",
+      "state": "MS",
+      "zip": "88881",
+      "country": "PW"
+    },
+    "sales": []
   }
 ]

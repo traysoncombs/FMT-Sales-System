@@ -5,13 +5,22 @@ import java.util.Objects;
 /**
  * Models a product item.
  */
-public class ProductInvoiceItem extends InvoiceItem {
+public class ProductItem extends Item {
     private final String unit;
     private final Float unitPrice;
-    public ProductInvoiceItem(String code, String name, String unit, Float unitPrice) {
+
+    public ProductItem(String code, String name, String unit, Float unitPrice) {
         super(code, name);
         this.unit = unit;
         this.unitPrice = unitPrice;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public Float getUnitPrice() {
+        return unitPrice;
     }
 
     @Override
@@ -19,7 +28,7 @@ public class ProductInvoiceItem extends InvoiceItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        ProductInvoiceItem that = (ProductInvoiceItem) o;
+        ProductItem that = (ProductItem) o;
         return Objects.equals(unit, that.unit) && Objects.equals(unitPrice, that.unitPrice);
     }
 

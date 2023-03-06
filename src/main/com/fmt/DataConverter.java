@@ -12,5 +12,6 @@ public class DataConverter {
     public static void main(String[] args) {
         Database db = new Database("data/Persons.csv", "data/Stores.csv", "data/Items.csv", Database.DataFormat.CSV);
         db.exportToJSON();
+        db.exportToXML();
     }
 }

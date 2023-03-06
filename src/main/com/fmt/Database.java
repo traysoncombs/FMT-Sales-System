@@ -1,10 +1,12 @@
 package com.fmt;
 
+import com.fmt.models.Invoice;
 import com.fmt.models.Person;
 import com.fmt.models.Store;
-import com.fmt.models.items.InvoiceItem;
+import com.fmt.models.invoiceitems.InvoiceItem;
+import com.fmt.models.items.Item;
 
-import com.fmt.models.items.InvoiceItemDerserializer;
+import com.fmt.models.items.ItemDerserializer;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 /**
  * Class to hold lists of all the relevant models and facilitate the
  * relating, importing, and exporting of the necessary data.
@@ -24,15 +27,14 @@ import java.util.Objects;
 public class Database {
     private final ArrayList<Person> people = new ArrayList<>();
     private final ArrayList<Store> stores = new ArrayList<>();
-    private final ArrayList<InvoiceItem> items = new ArrayList<>();
+    private final ArrayList<Item> items = new ArrayList<>();
+    private final ArrayList<Invoice> invoices = new ArrayList<>();
+    private final ArrayList<InvoiceItem> invoiceItems = new ArrayList<>();
     private static final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(InvoiceItem.class, new InvoiceItemDerserializer())
+            .registerTypeAdapter(Item.class, new ItemDerserializer())
             .setPrettyPrinting()
             .create();
-    private static final String OUTPUT_DIR = "data";
-    private static final String PEOPLE_OUTPUT = OUTPUT_DIR + "/Persons.json";
-    private static final String STORES_OUTPUT = OUTPUT_DIR + "/Stores.json";
-    private static final String ITEMS_OUTPUT = OUTPUT_DIR + "/Items.json";
+
 
     /**
      * Constructs a Database given the files to each dataset, as well as
@@ -53,11 +55,10 @@ public class Database {
 
                 break;
             case JSON:
-                // Order doesn't matter as much here as stores has already been related.
+                // Order doesn't matter as much here as stores have already been related.
                 this.importFromJSON(peopleFile, FieldType.PEOPLE);
                 this.importFromJSON(storesFile, FieldType.STORES);
                 this.importFromJSON(itemsFile, FieldType.ITEMS);
-
         }
     }
 
@@ -85,7 +86,7 @@ public class Database {
                     stores.add(Store.fromCSV(line, this));
                     break;
                 case ITEMS:
-                    items.add(InvoiceItem.fromCSV(line));
+                    items.add(Item.fromCSV(line));
                     break;
             }
         }
@@ -118,7 +119,7 @@ public class Database {
                 stores.addAll(gson.fromJson(jsonObject.get("stores"), storesArray));
                 break;
             case ITEMS:
-                TypeToken<ArrayList<InvoiceItem>> itemsArray = new TypeToken<ArrayList<InvoiceItem>>(){};
+                TypeToken<ArrayList<Item>> itemsArray = new TypeToken<ArrayList<Item>>(){};
                 items.addAll(gson.fromJson(jsonObject.get("items"), itemsArray));
                 break;
         }
@@ -140,34 +141,6 @@ public class Database {
         return null;
     }
 
-    /**
-     * Exports the database to three JSON files specified by the OUTPUT
-     * constants of this class.
-     */
-    public void exportToJSON() {
-        try {
-            FileWriter writer = new FileWriter(PEOPLE_OUTPUT);
-            JsonObject parent = new JsonObject();
-            parent.add("persons", gson.toJsonTree(people));
-            writer.write(gson.toJson(parent));
-            writer.close();
-
-            writer = new FileWriter(STORES_OUTPUT);
-            parent = new JsonObject();
-            parent.add("stores", gson.toJsonTree(stores));
-            writer.write(gson.toJson(stores));
-            writer.close();
-
-            writer = new FileWriter(ITEMS_OUTPUT);
-            parent = new JsonObject();
-            parent.add("items", gson.toJsonTree(items));
-            writer.write(gson.toJson(items));
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error exporting db to json.");
-        }
-    }
 
     @Override
     public boolean equals(Object o) {

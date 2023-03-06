@@ -1,20 +1,17 @@
 package com.fmt.models;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A class to model a person.
  */
-public class Person extends JsonSerializable {
+public class Person {
     private final String personCode;
-    private final String firstName;
     private final String lastName;
+    private final String firstName;
     private final Address address;
-    private final List<String> emails;
+    private final ArrayList<String> emails;
 
     /**
      * Constructs a new person with the associated attributes.
@@ -25,7 +22,7 @@ public class Person extends JsonSerializable {
      * @param address The persons address.
      * @param emails Any emails associated with the person.
      */
-    public Person(String personCode, String lastName, String firstName, Address address, List<String> emails) {
+    public Person(String personCode, String lastName, String firstName, Address address, ArrayList<String> emails) {
         this.personCode = personCode;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -49,7 +46,7 @@ public class Person extends JsonSerializable {
         if (data.size() > 8) {
             emails = data.subList(8, data.size());
         }
-        return new Person(data.get(0), data.get(1), data.get(2), addr, emails);
+        return new Person(data.get(0), data.get(1), data.get(2), addr, emails == null ? null : new ArrayList<>(emails));
     }
 
     public String getPersonCode() {

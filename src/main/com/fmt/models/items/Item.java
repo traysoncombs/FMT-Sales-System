@@ -1,13 +1,11 @@
 package com.fmt.models.items;
 
-import com.fmt.models.JsonSerializable;
-
 import java.util.Objects;
 
 /**
  * A class that models an invoice item.
  */
-public abstract class InvoiceItem extends JsonSerializable {
+public abstract class Item {
     protected final String code;
     protected final String name;
 
@@ -16,7 +14,7 @@ public abstract class InvoiceItem extends JsonSerializable {
      * @param code The unique code assigned to this item.
      * @param name The name of this item.
      */
-    public InvoiceItem(String code, String name) {
+    public Item(String code, String name) {
         this.code = code;
         this.name = name;
     }
@@ -28,15 +26,15 @@ public abstract class InvoiceItem extends JsonSerializable {
      * @param csv CSV string containing the item.
      * @return A instance of a subclass of InvoiceItem
      */
-    public static InvoiceItem fromCSV(String csv) {
+    public static Item fromCSV(String csv) {
         String[] data = csv.split(",");
         switch (data[1]) {
             case "E":
-                return new EquipmentInvoiceItem(data[0], data[2], data[3]);
+                return new EquipmentItem(data[0], data[2], data[3]);
             case "P":
-                return new ProductInvoiceItem(data[0], data[2], data[3], Float.parseFloat(data[4]));
+                return new ProductItem(data[0], data[2], data[3], Float.parseFloat(data[4]));
             case "S":
-                return new ServiceInvoiceItem(data[0], data[2], Float.parseFloat(data[3]));
+                return new ServiceItem(data[0], data[2], Double.parseDouble(data[3]));
             default:
                 throw new RuntimeException("Malformed item CSV, item type doesn't exist");
         }
@@ -46,7 +44,7 @@ public abstract class InvoiceItem extends JsonSerializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        InvoiceItem that = (InvoiceItem) o;
+        Item that = (Item) o;
         return Objects.equals(code, that.code) && Objects.equals(name, that.name);
     }
 

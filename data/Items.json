@@ -1,77 +1,34 @@
 [
   {
-    "model": "MegaTract 150HP",
-    "code": "1d4d89",
-    "name": "Tractor"
-  },
-  {
-    "model": "Husker 2000",
-    "code": "0ec6e9",
-    "name": "Harvester"
-  },
-  {
-    "model": "Haymaker 400",
-    "code": "740515",
-    "name": "Baler"
-  },
-  {
-    "model": "BidDoug X25",
-    "code": "3506f6",
-    "name": "Backhoe"
-  },
-  {
-    "model": "F105",
-    "code": "649f88",
+    "model": "250H",
+    "code": "123ef",
     "name": "Truck"
   },
   {
-    "unit": "bale",
-    "unitPrice": 500.0,
-    "code": "342foa3",
-    "name": "Haybale"
+    "model": "SE 1000",
+    "code": "abc123",
+    "name": "Trailer"
   },
   {
-    "unit": "bag",
-    "unitPrice": 50.0,
-    "code": "3n3k4l2",
-    "name": "Corn seed"
-  },
-  {
-    "unit": "liter",
-    "unitPrice": 10.25,
-    "code": "n3453js",
-    "name": "Fertilizer"
-  },
-  {
-    "unit": "lft",
-    "unitPrice": 8.0,
-    "code": "l4k32j4",
-    "name": "Wire fencing"
+    "unit": "stone",
+    "unitPrice": 100.0,
+    "code": "47365a",
+    "name": "Corn"
   },
   {
     "unit": "ton",
-    "unitPrice": 850.0,
-    "code": "23n4kl2",
-    "name": "Top soil"
+    "unitPrice": 20000.0,
+    "code": "asdf45",
+    "name": "Dirt"
   },
   {
-    "hourlyRate": 100.0,
-    "code": "2334b23",
-    "name": "Delivery"
+    "hourlyRate": 99.99,
+    "code": "abfg467",
+    "name": "Hauling"
   },
   {
-    "hourlyRate": 1000.0,
-    "code": "n43k2l3",
-    "name": "Plowing"
-  },
-  {
-    "hourlyRate": 25.0,
-    "code": "432kn2l",
-    "name": "Tractor Driving Lessons"
-  },
-  {
-    "hourlyRate": 225.5,
-    "code": "8432941",
-    "name": "Cattle Vaccination"
+    "hourlyRate": 10000.0,
+    "code": "54663a",
+    "name": "Consultation"
   }
 ]

@@ -2,15 +2,17 @@ package com.fmt.models;
 
 import com.fmt.Database;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
  * Class to model a store.
  */
-public class Store extends JsonSerializable {
+public class Store {
     private final String storeCode;
     private final Person manager;
     private final Address address;
+    private final ArrayList<Invoice> sales = new ArrayList<>();
 
     /**
      * Constructs a new store.

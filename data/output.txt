@@ -1,0 +1,127 @@
++-------------------------------------------------------------------------+
+|                        Summary Report - By Total                        |
++-----------+----------+-----------------+---------+----------+-----------+
+| Invoice # | Store    | Customer        | # Items | Tax      | Total     |
+| INV001    | d36421b9 | Booker,Beard    | 1       | 500.00   | 18766.67  |
+| INV002    | ff772d5e | Arnold,Lessie   | 2       | 2860.00  | 53860.00  |
+| INV003    | ff772d5e | Schwartz,Eunice | 1       | 715.00   | 10715.00  |
+| INV004    | 9d0344d9 | Booker,Beard    | 2       | 9508.18  | 285107.62 |
+|           |          |                 |         | 12103.18 | 366969.29 |
++-----------+----------+-----------------+---------+----------+-----------+
+
++----------------------------------------------------+
+|                 Store Sales Summary                |
++----------+-----------------+---------+-------------+
+| Store    | Manager         | # Sales | Grand Total |
++----------+-----------------+---------+-------------+
+| d36421b9 | Booker,Beard    | 1       | 18766.67    |
++----------+-----------------+---------+-------------+
+| ff772d5e | Garcia,Edith    | 2       | 63095.00    |
++----------+-----------------+---------+-------------+
+| d7dd7ff0 | Arnold,Lessie   | 0       | 0           |
++----------+-----------------+---------+-------------+
+| 9d0344d9 | Vega,Byers      | 1       | 285107.62   |
++----------+-----------------+---------+-------------+
+| ec29fc50 | Schwartz,Eunice | 0       | 0           |
++----------+-----------------+---------+-------------+
+| 3c72a849 | Lane,Lenora     | 0       | 0           |
++----------+-----------------+---------+-------------+
+|          |                 | 4       | 366969.29   |
++----------+-----------------+---------+-------------+
+
+
+Invoice:  INV001
+Store:    d36421b9
+Date:     2021-02-11
+Customer: Booker,Beard (cb9e5d00: [beardbooker@opticom.com,beardbooker@opticom.com,beardbooker@opticom.com])
+          Caton Place
+          Alleghenyville OR 88025 NZ
+
+Sales Person:
+          Garcia, Edith (1f65ea36: [edithgarcia@opticom.com, edithgarcia@opticom.com])
+          Ocean Avenue
+          Foscoe ID 58753 FX
+
+Item                                                               Total
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-                          -=-=-=-=-=-
+3506f6      (Lease)  Truck 250H
+	274 days (2021-07-09 -> 2022-04-09) @ $2000.00/ 30 days
+                                                             $  18266.67
+                                                             -=-=-=-=-=-
+                                                   Subtotal: $  18266.67
+                                                   Tax:      $    500.00
+                                                   Total:    $  18766.67
+
+
+Invoice:  INV002
+Store:    ff772d5e
+Date:     2021-01-01
+Customer: Arnold, Lessie (924725d8: [lessiearnold@opticom.com, lessiearnold@opticom.com, lessiearnold@opticom.com, lessiearnold@opticom.com])
+          Engert Avenue
+          Jessie NY 59430 GS
+
+Sales Person:
+          Vega, Byers (26d41b81: [byersvega@opticom.com, byersvega@opticom.com, byersvega@opticom.com, byersvega@opticom.com])
+          Madeline Court
+          Graniteville PW 76048 EE
+
+Item                                                               Total
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-                          -=-=-=-=-=-
+abc123          (Purchase) Trailer SE 10000
+                                                             $  11000.00
+asdf45          (Product) Dirt
+           2 @ $20000/ton
+                                                             $  40000.00
+                                                             -=-=-=-=-=-
+                                                   Subtotal: $  51000.00
+                                                   Tax:      $   2860.00
+                                                   Total:    $  53860.00
+
+
+Invoice:  INV003
+Store:    ff772d5e
+Date:     2021-02-01
+Customer: Schwartz,Eunice (63407d13: [])
+          Madeline Court
+          Graniteville PW 76048 EE
+
+Sales Person:
+          Lane, Lenora (7c83e390: [])
+          Midwood Street
+          Hessville AL 42547 IL
+
+Item                                                               Total
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-                          -=-=-=-=-=-
+47365a             (Product)  Corn
+             100 @ $100/ton
+                                                             $  10000.00
+                                                             -=-=-=-=-=-
+                                                   Subtotal: $  10000.00
+                                                   Tax:      $    715.00
+                                                   Total:    $  10715.00
+
+
+Invoice:  INV004
+Store:    9d0344d9
+Date:     2020-11-11
+Customer: Booker,Beard (cb9e5d00: [beardbooker@opticom.com,beardbooker@opticom.com,beardbooker@opticom.com])
+          Caton Place
+          Alleghenyville OR 88025 NZ
+
+Sales Person:
+          Lane, Lenora (7c83e390: [])
+          Midwood Street
+          Hessville AL 42547 IL
+
+Item                                                               Total
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-                          -=-=-=-=-=-
+abfg467            (Service)  Hauling
+              56 Hours @ $99.99/hour
+                                                             $  5599.44
+54663a              (Service)  Consultation
+              27 hours @ $10000.00/hour
+                                                             $ 270000.00
+                                                             -=-=-=-=-=-
+                                                   Subtotal: $ 275599.44
+                                                   Tax:      $   9508.18
+                                                   Total:    $ 285107.62

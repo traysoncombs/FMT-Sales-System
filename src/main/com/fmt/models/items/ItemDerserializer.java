@@ -12,28 +12,28 @@ import java.lang.reflect.Type;
  * are able to determine the subclass type by checking the unique
  * attributes associated with each.
  */
-public class InvoiceItemDerserializer implements JsonDeserializer<InvoiceItem> {
+public class ItemDerserializer implements JsonDeserializer<Item> {
     @Override
-    public InvoiceItem deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+    public Item deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject obj = jsonElement.getAsJsonObject();
         if (obj.has("model")) {
-            return new EquipmentInvoiceItem(
+            return new EquipmentItem(
                     obj.get("code").getAsString(),
                     obj.get("name").getAsString(),
                     obj.get("model").getAsString()
             );
         } else if (obj.has("unit")) {
-            return new ProductInvoiceItem(
+            return new ProductItem(
                     obj.get("code").getAsString(),
                     obj.get("name").getAsString(),
                     obj.get("unit").getAsString(),
                     obj.get("unitPrice").getAsFloat()
             );
         } else if (obj.has("hourlyRate")) {
-            return new ServiceInvoiceItem(
+            return new ServiceItem(
                     obj.get("code").getAsString(),
                     obj.get("name").getAsString(),
-                    obj.get("hourlyRate").getAsFloat()
+                    obj.get("hourlyRate").getAsDouble()
             );
         }
         return null;

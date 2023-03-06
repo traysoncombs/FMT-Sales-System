@@ -5,9 +5,9 @@ import java.util.Objects;
 /**
  * Models an equipment item.
  */
-public class EquipmentInvoiceItem extends InvoiceItem{
+public class EquipmentItem extends Item {
     private final String model;
-    public EquipmentInvoiceItem(String code, String name, String model) {
+    public EquipmentItem(String code, String name, String model) {
         super(code, name);
         this.model = model;
     }
@@ -17,7 +17,7 @@ public class EquipmentInvoiceItem extends InvoiceItem{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        EquipmentInvoiceItem that = (EquipmentInvoiceItem) o;
+        EquipmentItem that = (EquipmentItem) o;
         return Objects.equals(model, that.model);
     }
 

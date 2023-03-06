@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Class to model an address.
  */
-public class Address extends JsonSerializable {
+public class Address {
     private final String street;
     private final String city;
     private final String state;
