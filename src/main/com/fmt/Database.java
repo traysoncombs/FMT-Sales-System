@@ -11,7 +11,6 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -29,7 +28,7 @@ public class Database {
     private final ArrayList<Store> stores = new ArrayList<>();
     private final ArrayList<Item> items = new ArrayList<>();
     private final ArrayList<Invoice> invoices = new ArrayList<>();
-    private final ArrayList<InvoiceItem> invoiceItems = new ArrayList<>();
+    private final ArrayList<InvoiceItem<?>> invoiceItems = new ArrayList<>();
     private static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(Item.class, new ItemDerserializer())
             .setPrettyPrinting()
@@ -45,14 +44,15 @@ public class Database {
      * @param itemsFile Path to the file containing invoice items.
      * @param format Format of the data to be imported, JSON or CSV.
      */
-    public Database(String peopleFile, String storesFile, String itemsFile, DataFormat format) {
+    public Database(String peopleFile, String storesFile, String itemsFile, String invoiceFile, String invoiceItemsFile, DataFormat format) {
         switch (format) {
             case CSV:
                 // Must import people before stores in order to relate the managers
                 this.importFromCSV(peopleFile, FieldType.PEOPLE);
                 this.importFromCSV(itemsFile, FieldType.ITEMS);
+                this.importFromCSV(invoiceItemsFile, FieldType.INVOICE_ITEMS);
+                this.importFromCSV(invoiceFile, FieldType.INVOICE);
                 this.importFromCSV(storesFile, FieldType.STORES);
-
                 break;
             case JSON:
                 // Order doesn't matter as much here as stores have already been related.
@@ -72,6 +72,7 @@ public class Database {
         List<String> lines;
         try {
             lines = Files.readAllLines(Paths.get(csvFile));
+            lines.remove(""); // Remove any empty lines
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Error opening file.");
@@ -83,10 +84,19 @@ public class Database {
                     people.add(Person.fromCSV(line));
                     break;
                 case STORES:
-                    stores.add(Store.fromCSV(line, this));
+                    Store store = Store.fromCSV(line, this);
+                    // If the store is null, exclude it from the db.
+                    if (store == null) break;
+                    else stores.add(store);
                     break;
                 case ITEMS:
                     items.add(Item.fromCSV(line));
+                    break;
+                case INVOICE:
+                    invoices.add(Invoice.fromCSV(line, this));
+                    break;
+                case INVOICE_ITEMS:
+                    invoiceItems.add(InvoiceItem.fromCSV(line, this));
                     break;
             }
         }
@@ -133,12 +143,41 @@ public class Database {
      * @return Person with the specified code, or null if they don't exist.
      */
     public Person getPersonByCode(String code) {
-        for (Person p : people) {
+        for (Person p : this.people) {
             if (p.getPersonCode().equals(code)) {
                 return p;
             }
         }
         return null;
+    }
+
+    public Item getItemByCode(String code) {
+        for (Item i : this.items) {
+            if (i.getItemCode().equals(code)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<InvoiceItem<?>> getInvoiceItemsByCode(String code) {
+        ArrayList<InvoiceItem<?>> invoiceItemsWithCode = new ArrayList<>();
+        for (InvoiceItem<?> i : this.invoiceItems) {
+            if (i.getInvoiceCode().equals(code)) {
+                invoiceItemsWithCode.add(i);
+            }
+        }
+        return invoiceItemsWithCode;
+    }
+
+    public ArrayList<Invoice> getInvoicesByStore(String storeCode) {
+        ArrayList<Invoice> invoicesWithStore = new ArrayList<>();
+        for (Invoice i : this.invoices) {
+            if (i.getStoreCode().equals(storeCode)) {
+                invoicesWithStore.add(i);
+            }
+        }
+        return invoicesWithStore;
     }
 
 
@@ -155,10 +194,29 @@ public class Database {
         return Objects.hash(people, stores, items);
     }
 
+
+    public ArrayList<Person> getPeople() {
+        return people;
+    }
+
+    public ArrayList<Store> getStores() {
+        return stores;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public ArrayList<Invoice> getInvoices() {
+        return invoices;
+    }
+
     public enum FieldType {
         PEOPLE,
         STORES,
         ITEMS,
+        INVOICE_ITEMS,
+        INVOICE,
     }
 
     public enum DataFormat {

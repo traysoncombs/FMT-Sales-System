@@ -41,6 +41,12 @@ public class Address {
     }
 
     @Override
+    public String toString() {
+        return String.format("           %s\n", street) +
+                String.format("           %s %s %s %s", city, state, zip, country);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

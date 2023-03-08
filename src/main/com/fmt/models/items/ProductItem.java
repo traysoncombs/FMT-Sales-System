@@ -7,9 +7,9 @@ import java.util.Objects;
  */
 public class ProductItem extends Item {
     private final String unit;
-    private final Float unitPrice;
+    private final Double unitPrice;
 
-    public ProductItem(String code, String name, String unit, Float unitPrice) {
+    public ProductItem(String code, String name, String unit, Double unitPrice) {
         super(code, name);
         this.unit = unit;
         this.unitPrice = unitPrice;
@@ -19,7 +19,7 @@ public class ProductItem extends Item {
         return unit;
     }
 
-    public Float getUnitPrice() {
+    public Double getUnitPrice() {
         return unitPrice;
     }
 

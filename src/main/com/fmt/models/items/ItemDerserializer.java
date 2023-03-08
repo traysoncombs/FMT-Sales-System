@@ -27,7 +27,7 @@ public class ItemDerserializer implements JsonDeserializer<Item> {
                     obj.get("code").getAsString(),
                     obj.get("name").getAsString(),
                     obj.get("unit").getAsString(),
-                    obj.get("unitPrice").getAsFloat()
+                    obj.get("unitPrice").getAsDouble()
             );
         } else if (obj.has("hourlyRate")) {
             return new ServiceItem(

@@ -12,6 +12,10 @@ public class EquipmentItem extends Item {
         this.model = model;
     }
 
+    public String getModel() {
+        return model;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

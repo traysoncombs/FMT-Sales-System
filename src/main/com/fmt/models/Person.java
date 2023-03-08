@@ -53,6 +53,19 @@ public class Person {
         return personCode;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String toString() {
+        return String.format("%s, %s (%s: [%s])\n", lastName, firstName, personCode, String.join(", ", emails)) +
+                address.toString();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
