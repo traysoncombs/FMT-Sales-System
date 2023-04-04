@@ -15,16 +15,11 @@ public class InvoiceReport {
                 "data/Stores.csv",
                 "data/Items.csv",
                 "data/Invoices.csv",
-                "data/InvoiceItems.csv",
-                Database.DataFormat.CSV);
+                "data/InvoiceItems.csv");
 
         ReportGenerator reportGenerator = new ReportGenerator(db);
         System.out.println(reportGenerator.generateSummaryReport());
         System.out.println(reportGenerator.generateStoreSummary());
-        System.out.println(reportGenerator.generateInvoiceSummaries());
-
+        System.out.println(reportGenerator.generateInvoiceReports());
     }
-
-
-
 }

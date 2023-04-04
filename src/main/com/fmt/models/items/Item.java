@@ -10,9 +10,8 @@ public abstract class Item {
     protected final String name;
 
     /**
-     *
      * @param itemCode The unique code assigned to this item.
-     * @param name The name of this item.
+     * @param name     The name of this item.
      */
     public Item(String itemCode, String name) {
         this.itemCode = itemCode;
@@ -47,7 +46,6 @@ public abstract class Item {
     public String getName() {
         return name;
     }
-
 
     @Override
     public boolean equals(Object o) {

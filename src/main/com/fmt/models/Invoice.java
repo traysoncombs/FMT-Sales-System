@@ -2,22 +2,41 @@ package com.fmt.models;
 
 import com.fmt.Database;
 import com.fmt.models.invoiceitems.InvoiceItem;
-import com.fmt.models.items.Item;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
+/**
+ * A class to model an invoice.
+ */
 public class Invoice {
     private final String invoiceCode;
     private final String storeCode;
     private final Person customer;
     private final Person salesPerson;
     private final LocalDate invoiceDate;
-
     private final ArrayList<InvoiceItem<?>> invoiceItems;
 
-    public Invoice(String invoiceCode, String storeCode, Person customer, Person salesPerson, LocalDate invoiceDate, ArrayList<InvoiceItem<?>> invoiceItems) {
+    /**
+     * Constructs an invoice. Mostly used internally by fromCSV.
+     *
+     * @param invoiceCode  The code of the invoice
+     * @param storeCode    Code of the associated store.
+     * @param customer     Person object associated with customer.
+     * @param salesPerson  Person object associated with sales person.
+     * @param invoiceDate  Date associated.
+     * @param invoiceItems All items that were sold on this invoice.
+     */
+    public Invoice(
+            String invoiceCode,
+            String storeCode,
+            Person customer,
+            Person salesPerson,
+            LocalDate invoiceDate,
+            ArrayList<InvoiceItem<?>> invoiceItems
+    ) {
         this.invoiceCode = invoiceCode;
         this.storeCode = storeCode;
         this.customer = customer;
@@ -26,8 +45,17 @@ public class Invoice {
         this.invoiceItems = invoiceItems;
     }
 
+    /**
+     * Factory method to build an invoice given a CSV string. The Database
+     * that is passed should contain all the items referenced by this invoice.
+     *
+     * @param csv Invoice in CSV format.
+     * @param db  Reference to the database where invoice items are stored.
+     * @return An instance of Invoice.
+     */
     public static Invoice fromCSV(String csv, Database db) {
         String[] data = csv.split(",");
+
         return new Invoice(
                 data[0],
                 data[1],
@@ -38,25 +66,16 @@ public class Invoice {
         );
     }
 
-    public Double getNetCost(){
-        return invoiceItems.stream().mapToDouble(InvoiceItem::getNetCost).sum();
-    }
-
-    public double getTotalTax() {
-        return invoiceItems.stream().mapToDouble(InvoiceItem::getTax).sum();
-    }
-
-    public double getGrossCost() {
-        return getNetCost() + getTotalTax();
-    }
-
-    public Integer getTotalItems() {
-        return invoiceItems.size();
-    }
-
-    public String generateReport() {
+    /**
+     * Generates a beautiful in depth report containing all information
+     * relevant to the invoice.
+     *
+     * @return A string containing the report.
+     */
+    public String generateFullReport() {
         double subtotal = 0.0;
         Double tax = 0.0;
+
         StringBuilder out = new StringBuilder(String.format("Invoice: %8s\n", invoiceCode) +
                 String.format("Store:     %1s\n", storeCode) +
                 String.format("Date:%16s\n", invoiceDate.toString()) +
@@ -69,7 +88,7 @@ public class Invoice {
             double cost = item.getNetCost();
             subtotal += cost;
             tax += item.getTax();
-            out.append(item);
+            out.append(item.generateReport());
             out.append(String.format("                                                         $ %13.2f\n", cost));
         }
 
@@ -80,7 +99,13 @@ public class Invoice {
         return out.toString();
     }
 
-    public String generateSummary() {
+    /**
+     * Generates a simpler report containing less information
+     * than the full report.
+     *
+     * @return A summary report.
+     */
+    public String generateSummaryReport() {
         return String.format(
                 "%-10s %-10s %-30s %-10s $ %9.2f $ %12.2f\n",
                 invoiceCode,
@@ -92,8 +117,52 @@ public class Invoice {
         );
     }
 
+    /**
+     * Calculated the total cost of all the invoice
+     * items excluding tax.
+     *
+     * @return Net cost
+     */
+    public Double getNetCost() {
+        return invoiceItems.stream()
+                .mapToDouble(InvoiceItem::getNetCost)
+                .sum();
+    }
+
+    /**
+     * Calculates the total tax of all
+     * the invoice items
+     *
+     * @return Total tax
+     */
+    public double getTotalTax() {
+        return invoiceItems.stream()
+                .mapToDouble(InvoiceItem::getTax)
+                .sum();
+    }
+
+    public double getGrossCost() {
+        return getNetCost() + getTotalTax();
+    }
+
+    public Integer getTotalItems() {
+        return invoiceItems.size();
+    }
+
     public String getStoreCode() {
         return storeCode;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Invoice invoice = (Invoice) o;
+        return Objects.equals(invoiceCode, invoice.invoiceCode) && Objects.equals(storeCode, invoice.storeCode) && Objects.equals(customer, invoice.customer) && Objects.equals(salesPerson, invoice.salesPerson) && Objects.equals(invoiceDate, invoice.invoiceDate) && Objects.equals(invoiceItems, invoice.invoiceItems);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(invoiceCode, storeCode, customer, salesPerson, invoiceDate, invoiceItems);
+    }
 }

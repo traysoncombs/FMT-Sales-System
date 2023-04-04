@@ -6,11 +6,6 @@ import com.fmt.models.Store;
 import com.fmt.models.invoiceitems.InvoiceItem;
 import com.fmt.models.items.Item;
 
-import com.fmt.models.items.ItemDerserializer;
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,53 +15,39 @@ import java.util.Objects;
 
 
 /**
- * Class to hold lists of all the relevant models and facilitate the
- * relating, importing, and exporting of the necessary data.
+ * Class to hold lists of all the relevant models and facilitates the
+ * relating and importing of the necessary data.
  */
 public class Database {
     private final ArrayList<Person> people = new ArrayList<>();
     private final ArrayList<Store> stores = new ArrayList<>();
     private final ArrayList<Item> items = new ArrayList<>();
     private final ArrayList<Invoice> invoices = new ArrayList<>();
-    private final ArrayList<InvoiceItem<?>> invoiceItems = new ArrayList<>();
-    private static final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(Item.class, new ItemDerserializer())
-            .setPrettyPrinting()
-            .create();
 
+    private final ArrayList<InvoiceItem<?>> invoiceItems = new ArrayList<>();
 
     /**
      * Constructs a Database given the files to each dataset, as well as
-     * the type of data being imported. Supports JSON and CSV.
+     * the type of data being imported.
      *
      * @param peopleFile Path to the file containing people.
      * @param storesFile Path to the file containing stores.
-     * @param itemsFile Path to the file containing invoice items.
-     * @param format Format of the data to be imported, JSON or CSV.
+     * @param itemsFile  Path to the file containing invoice items.
      */
-    public Database(String peopleFile, String storesFile, String itemsFile, String invoiceFile, String invoiceItemsFile, DataFormat format) {
-        switch (format) {
-            case CSV:
-                // Must import people before stores in order to relate the managers
-                this.importFromCSV(peopleFile, FieldType.PEOPLE);
-                this.importFromCSV(itemsFile, FieldType.ITEMS);
-                this.importFromCSV(invoiceItemsFile, FieldType.INVOICE_ITEMS);
-                this.importFromCSV(invoiceFile, FieldType.INVOICE);
-                this.importFromCSV(storesFile, FieldType.STORES);
-                break;
-            case JSON:
-                // Order doesn't matter as much here as stores have already been related.
-                this.importFromJSON(peopleFile, FieldType.PEOPLE);
-                this.importFromJSON(storesFile, FieldType.STORES);
-                this.importFromJSON(itemsFile, FieldType.ITEMS);
-        }
+    public Database(String peopleFile, String storesFile, String itemsFile, String invoiceFile, String invoiceItemsFile) {
+        // Must import people before stores in order to relate the managers
+        this.importFromCSV(peopleFile, FieldType.PEOPLE);
+        this.importFromCSV(itemsFile, FieldType.ITEMS);
+        this.importFromCSV(invoiceItemsFile, FieldType.INVOICE_ITEMS);
+        this.importFromCSV(invoiceFile, FieldType.INVOICE);
+        this.importFromCSV(storesFile, FieldType.STORES);
     }
 
     /**
      * Imports a csv file with data containing type.
      *
      * @param csvFile Path to the CSV file that should be imported
-     * @param type Type of data being imported, can be people, stores, or items.
+     * @param type    Type of data being imported, can be people, stores, or items.
      */
     public void importFromCSV(String csvFile, FieldType type) {
         List<String> lines;
@@ -96,45 +77,14 @@ public class Database {
                     invoices.add(Invoice.fromCSV(line, this));
                     break;
                 case INVOICE_ITEMS:
-                    invoiceItems.add(InvoiceItem.fromCSV(line, this));
+                    InvoiceItem<?> item = InvoiceItem.fromCSV(line, this);
+                    // If the invoice item is null, exclude it from the db.
+                    if (item == null) break;
+                    invoiceItems.add(item);
                     break;
             }
         }
     }
-
-    /**
-     * Imports a JSON file with data containing type.
-     *
-     * @param jsonFile Path to the JSON file that should be imported
-     * @param type Type of data being imported, can be people, stores, or items.
-     */
-    public void importFromJSON(String jsonFile, FieldType type) {
-        FileReader reader;
-        try {
-            reader = new FileReader(jsonFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error opening file.");
-        }
-        // This is necessary because the schema requires that the array is contained in an object
-        // and this is a way to do it with GSON.
-        JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
-        switch (type) {
-            case PEOPLE:
-                TypeToken<ArrayList<Person>> personsArray = new TypeToken<ArrayList<Person>>(){};
-                people.addAll(gson.fromJson(jsonObject.get("persons"), personsArray));
-                break;
-            case STORES:
-                TypeToken<ArrayList<Store>> storesArray = new TypeToken<ArrayList<Store>>(){};
-                stores.addAll(gson.fromJson(jsonObject.get("stores"), storesArray));
-                break;
-            case ITEMS:
-                TypeToken<ArrayList<Item>> itemsArray = new TypeToken<ArrayList<Item>>(){};
-                items.addAll(gson.fromJson(jsonObject.get("items"), itemsArray));
-                break;
-        }
-    }
-
 
     /**
      * Returns a person in the database with the specified code if they exist.
@@ -151,6 +101,12 @@ public class Database {
         return null;
     }
 
+    /**
+     * Returns an item with the specified code, if it exists.
+     *
+     * @param code item code
+     * @return Item with the specified code
+     */
     public Item getItemByCode(String code) {
         for (Item i : this.items) {
             if (i.getItemCode().equals(code)) {
@@ -160,6 +116,12 @@ public class Database {
         return null;
     }
 
+    /**
+     * Gets a list of invoice items belonging to an Invoice.
+     *
+     * @param code Invoice code
+     * @return A list of invoice items belonging to the specified Invoice.
+     */
     public ArrayList<InvoiceItem<?>> getInvoiceItemsByCode(String code) {
         ArrayList<InvoiceItem<?>> invoiceItemsWithCode = new ArrayList<>();
         for (InvoiceItem<?> i : this.invoiceItems) {
@@ -170,6 +132,12 @@ public class Database {
         return invoiceItemsWithCode;
     }
 
+    /**
+     * Gets a list of invoices associated with a store.
+     *
+     * @param storeCode A stores code.
+     * @return A list of Invoices associated with storeCode.
+     */
     public ArrayList<Invoice> getInvoicesByStore(String storeCode) {
         ArrayList<Invoice> invoicesWithStore = new ArrayList<>();
         for (Invoice i : this.invoices) {
@@ -179,21 +147,6 @@ public class Database {
         }
         return invoicesWithStore;
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Database database = (Database) o;
-        return people.equals(database.people) && stores.equals(database.stores) && items.equals(database.items);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(people, stores, items);
-    }
-
 
     public ArrayList<Person> getPeople() {
         return people;
@@ -207,8 +160,29 @@ public class Database {
         return items;
     }
 
+    public ArrayList<InvoiceItem<?>> getInvoiceItems() {
+        return invoiceItems;
+    }
+
     public ArrayList<Invoice> getInvoices() {
         return invoices;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Database database = (Database) o;
+        return Objects.equals(people, database.people) &&
+                Objects.equals(stores, database.stores) &&
+                Objects.equals(items, database.items) &&
+                Objects.equals(invoices, database.invoices) &&
+                Objects.equals(invoiceItems, database.invoiceItems);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(people, stores, items, invoices, invoiceItems);
     }
 
     public enum FieldType {
@@ -217,10 +191,5 @@ public class Database {
         ITEMS,
         INVOICE_ITEMS,
         INVOICE,
-    }
-
-    public enum DataFormat {
-        CSV,
-        JSON,
     }
 }

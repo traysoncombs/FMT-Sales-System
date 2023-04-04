@@ -4,6 +4,9 @@ import com.fmt.models.items.EquipmentItem;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Models an equipment item that was leased.
+ */
 public class LeasedEquipmentInvoiceItem extends InvoiceItem<EquipmentItem> {
     private final Double fee;
     private final Integer leaseLength;
@@ -31,12 +34,18 @@ public class LeasedEquipmentInvoiceItem extends InvoiceItem<EquipmentItem> {
         }
     }
 
+    /**
+     * Calculates the cost excluding tax
+     * and rounded to the nearest hundredth
+     * of this item.
+     */
     @Override
     public Double getNetCost() {
         return Math.round(fee * (leaseLength / 30.0) * 100) / 100.0;
     }
 
-    public String toString() {
+    @Override
+    public String generateReport() {
         return String.format("%s      (Lease)  %s %s\n", item.getItemCode(), item.getName(), item.getModel()) +
                 String.format("        %d days (%s -> %s @ $ %.2f/30 days)\n", leaseLength, startDate.toString(), endDate.toString(), fee);
     }

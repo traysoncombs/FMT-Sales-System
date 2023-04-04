@@ -1,20 +1,19 @@
 package com.fmt;
 
-import com.fmt.models.items.Item;
-import com.fmt.models.items.ItemDerserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
-import javax.xml.crypto.Data;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class DatabaseExporter {
+/**
+ * Utility class to export the database to XML and JSON.
+ */
+public final class DatabaseExporter {
     private static final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(Item.class, new ItemDerserializer())
             .setPrettyPrinting()
             .create();
     private static final String OUTPUT_DIR = "data";
@@ -28,6 +27,8 @@ public class DatabaseExporter {
     /**
      * Exports the database to three JSON files specified by the OUTPUT
      * constants of this class.
+     *
+     * @param db The database to export.
      */
     public static void exportToJSON(Database db) {
         try {
@@ -48,6 +49,18 @@ public class DatabaseExporter {
             parent.add("items", gson.toJsonTree(db.getItems()));
             writer.write(gson.toJson(db.getItems()));
             writer.close();
+
+            writer = new FileWriter(INVOICES_OUTPUT + ".json");
+            parent = new JsonObject();
+            parent.add("invoices", gson.toJsonTree(db.getInvoices()));
+            writer.write(gson.toJson(db.getInvoices()));
+            writer.close();
+
+            writer = new FileWriter(INVOICE_ITEMS_OUTPUT + ".json");
+            parent = new JsonObject();
+            parent.add("invoice_items", gson.toJsonTree(db.getInvoiceItems()));
+            writer.write(gson.toJson(db.getInvoiceItems()));
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Error exporting db to json.");
@@ -56,8 +69,10 @@ public class DatabaseExporter {
 
     /**
      * Exports the database to three respective XML files.
+     *
+     * @param db The database to export.
      */
-    public void exportToXML(Database db) {
+    public static void exportToXML(Database db) {
         try {
             FileWriter writer = new FileWriter(PEOPLE_OUTPUT + ".xml");
             XStream xStream = new XStream(new DomDriver());
@@ -72,6 +87,13 @@ public class DatabaseExporter {
             writer.write(xStream.toXML(db.getItems()));
             writer.close();
 
+            writer = new FileWriter(INVOICES_OUTPUT + ".xml");
+            writer.write(xStream.toXML(db.getInvoices()));
+            writer.close();
+
+            writer = new FileWriter(INVOICE_ITEMS_OUTPUT + ".xml");
+            writer.write(xStream.toXML(db.getInvoiceItems()));
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Error exporting db to XML.");
