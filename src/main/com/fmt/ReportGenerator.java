@@ -1,6 +1,7 @@
 package com.fmt;
 
 
+import com.fmt.datastore.Datastore;
 import com.fmt.models.Invoice;
 import com.fmt.models.Store;
 
@@ -12,10 +13,10 @@ import java.util.Comparator;
  * A class containing methods to generate reports based off a Database.
  */
 public class ReportGenerator {
-    private final Database db;
+    private final Datastore ds;
 
-    public ReportGenerator(Database db) {
-        this.db = db;
+    public ReportGenerator(Datastore ds) {
+        this.ds = ds;
     }
 
     /**
@@ -25,7 +26,7 @@ public class ReportGenerator {
      */
     public String generateSummaryReport() {
         // Create a copy of invoices so the order of the array in Database isn't changed.
-        ArrayList<Invoice> invoices = new ArrayList<>(db.getInvoices());
+        ArrayList<Invoice> invoices = new ArrayList<>(ds.getInvoices());
         double totalTax = 0.0;
         double totalCost = 0.0;
         int totalItems = 0;
@@ -60,7 +61,7 @@ public class ReportGenerator {
      * @return A summary report for stores
      */
     public String generateStoreSummary() {
-        ArrayList<Store> stores = new ArrayList<>(db.getStores());
+        ArrayList<Store> stores = new ArrayList<>(ds.getStores());
         double total = 0.0;
         int totalNumSales = 0;
 
@@ -110,7 +111,7 @@ public class ReportGenerator {
     public String generateInvoiceReports() {
         StringBuilder out = new StringBuilder();
 
-        for (Invoice i : db.getInvoices()) {
+        for (Invoice i : ds.getInvoices()) {
             out.append(i.generateFullReport()).append("\n\n");
         }
 

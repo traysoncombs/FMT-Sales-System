@@ -1,12 +1,13 @@
 package com.fmt.models;
 
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
  * A class to model a person.
  */
-public class Person {
+public class Person implements Persistable {
     private final String personCode;
     private final String lastName;
     private final String firstName;
@@ -43,7 +44,7 @@ public class Person {
     public static Person fromCSV(String csv) {
         List<String> data = Arrays.asList(csv.split(","));
         List<String> emails = null;
-        Address addr = new Address(data.get(3), data.get(4), data.get(5), data.get(6), data.get(7));
+        Address addr = Address.fromCSV(csv, 3);
 
         // Any field after the 8th is an email
         if (data.size() > 8) {
@@ -56,6 +57,33 @@ public class Person {
                 data.get(2),
                 addr,
                 emails == null ? null : new ArrayList<>(emails)
+        );
+    }
+
+    /**
+     * Takes a ResultSet containing the fields:
+     * `person_code`, `last_name`, `first_name`, `street`, `zip_code`, `city`,
+     * `state`, `country`, and `emails`.
+     * @param rs ResultSet containing specified fields.
+     * @return Person
+     * @throws SQLException if ResultSet doesn't contain necessary fields.
+     */
+    public static Person fromRow(ResultSet rs) throws SQLException {
+        Address address = Address.fromRow(rs);
+        ArrayList<String> emails = null;
+        String CSVEmails = rs.getString("emails");
+
+        // If there aren't any emails just pass it as null
+        if (CSVEmails != null) {
+           emails = new ArrayList<>(Arrays.asList(CSVEmails.split(",")));
+        }
+
+        return new Person(
+                rs.getString("person_code"),
+                rs.getString("last_name"),
+                rs.getString("first_name"),
+                address,
+                emails
         );
     }
 
@@ -88,5 +116,10 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(personCode, firstName, lastName, address, emails);
+    }
+
+    @Override
+    public boolean saveToDB() {
+        return false;
     }
 }

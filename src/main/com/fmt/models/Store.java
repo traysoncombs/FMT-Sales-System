@@ -1,15 +1,16 @@
 package com.fmt.models;
 
-import com.fmt.Database;
+import com.fmt.datastore.Datastore;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 /**
  * Class to model a store.
  */
-public class Store {
+public class Store implements Persistable {
     private final String storeCode;
     private final Person manager;
     private final Address address;
@@ -19,7 +20,7 @@ public class Store {
      * Constructs a new store.
      *
      * @param storeCode The unique alphanumeric code that identifies this specific store.
-     * @param manager   The person object who manager this store.
+     * @param manager   The person object who manages this store.
      * @param address   The address this store is located at.
      */
     public Store(String storeCode, Person manager, Address address, ArrayList<Invoice> sales) {
@@ -35,22 +36,46 @@ public class Store {
      * to pass a reference to the database in order to relate the associated
      * manager to the store.
      *
-     * @param csv The CSV string containing the stores information.
+     * @param csv The CSV string containing the store's information.
      * @param db  A reference to the Database containing the list of all people.
      *            This is used to relate the stores manager code to an actual person.
      * @return A store object built from the CSV string, or null if the manager doesn't exist.
      */
-    public static Store fromCSV(String csv, Database db) {
+    public static Store fromCSV(String csv, Datastore db) {
         String[] data = csv.split(",");
-        Address addr = new Address(data[2], data[3], data[4], data[5], data[6]);
+        Address addr = Address.fromCSV(csv, 2);
         Person manager = db.getPersonByCode(data[1]); // This can be null so we need to be careful
 
         if (manager == null) {
-            System.out.println("Error: Manager personCode doesn't exist in database.");
             return null;
         }
 
         return new Store(data[0], manager, addr, db.getInvoicesByStore(data[0]));
+    }
+
+    /**
+     * Takes a result set containing the fields:
+     * `store_code`, `manager_code`, `street`, `city`, `zip_code`, `state`, `country`
+     * and returns a store. The Datastore should contain sales and people.
+     *
+     * @param rs Result set containing necessary fields
+     * @param ds Reference to data store containing sales and people.
+     * @return Store or null if manager_code isn't associated with a person.
+     * @throws SQLException if ResultSet doesn't contain necessary fields.
+     */
+    public static Store fromRow(ResultSet rs, Datastore ds) throws SQLException {
+        Person manager = ds.getPersonByCode(rs.getString("manager_code"));
+
+        if (manager == null) return null;
+
+        Address address = Address.fromRow(rs);
+
+        return new Store(
+                rs.getString("store_code"),
+                manager,
+                address,
+                ds.getInvoicesByStore(rs.getString("store_code"))
+        );
     }
 
     /**
@@ -87,6 +112,10 @@ public class Store {
         return manager;
     }
 
+    public String getStoreCode() {
+        return storeCode;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,5 +130,10 @@ public class Store {
     @Override
     public int hashCode() {
         return Objects.hash(storeCode, manager, address);
+    }
+
+    @Override
+    public boolean saveToDB() {
+        return false;
     }
 }

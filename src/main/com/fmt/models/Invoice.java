@@ -1,8 +1,10 @@
 package com.fmt.models;
 
-import com.fmt.Database;
+import com.fmt.datastore.Datastore;
 import com.fmt.models.invoiceitems.InvoiceItem;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -11,7 +13,7 @@ import java.util.Objects;
 /**
  * A class to model an invoice.
  */
-public class Invoice {
+public class Invoice implements Persistable {
     private final String invoiceCode;
     private final String storeCode;
     private final Person customer;
@@ -50,19 +52,51 @@ public class Invoice {
      * that is passed should contain all the items referenced by this invoice.
      *
      * @param csv Invoice in CSV format.
-     * @param db  Reference to the database where invoice items are stored.
+     * @param ds  Reference to the database where invoice items are stored.
      * @return An instance of Invoice.
      */
-    public static Invoice fromCSV(String csv, Database db) {
+    public static Invoice fromCSV(String csv, Datastore ds) {
         String[] data = csv.split(",");
+        Person customer = ds.getPersonByCode(data[2]);
+        Person salesPerson = ds.getPersonByCode(data[3]);
+
+
+        if (customer == null || salesPerson == null) return null;
 
         return new Invoice(
                 data[0],
                 data[1],
-                db.getPersonByCode(data[2]),
-                db.getPersonByCode(data[3]),
+                customer,
+                salesPerson,
                 LocalDate.parse(data[4]),
-                db.getInvoiceItemsByCode(data[0])
+                ds.getInvoiceItemsByCode(data[0])
+        );
+    }
+
+    /**
+     * Takes a ResultSet containing the fields:
+     * `invoice_code`, `store_code`, `customer_code`,
+     * `salesperson_code`, `invoice_date`.
+     *
+     * @param rs ResultSet containing necessary fields
+     * @param ds Datastore containing relevant people and invoice items.
+     * @return Invoice or null if customer or salesperson codes don't exist.
+     * @throws SQLException if ResultSet doesn't contain necessary fields.
+     */
+    public static Invoice fromRow(ResultSet rs, Datastore ds) throws SQLException {
+        Person customer = ds.getPersonByCode(rs.getString("customer_code"));
+        Person salesPerson = ds.getPersonByCode(rs.getString("salesperson_code"));
+        String invoice_code = rs.getString("invoice_code");
+
+        if (customer == null || salesPerson == null) return null;
+
+        return new Invoice(
+                invoice_code,
+                rs.getString("store_code"),
+                customer,
+                salesPerson,
+                LocalDate.parse(rs.getString("invoice_date")),
+                ds.getInvoiceItemsByCode(invoice_code)
         );
     }
 
@@ -153,6 +187,10 @@ public class Invoice {
         return storeCode;
     }
 
+    public String getInvoiceCode() {
+        return invoiceCode;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -164,5 +202,10 @@ public class Invoice {
     @Override
     public int hashCode() {
         return Objects.hash(invoiceCode, storeCode, customer, salesPerson, invoiceDate, invoiceItems);
+    }
+
+    @Override
+    public boolean saveToDB() {
+        return false;
     }
 }

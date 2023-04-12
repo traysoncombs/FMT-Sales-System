@@ -29,4 +29,9 @@ public class EquipmentItem extends Item {
     public int hashCode() {
         return Objects.hash(super.hashCode(), model);
     }
+
+    @Override
+    public boolean saveToDB() {
+        return false;
+    }
 }

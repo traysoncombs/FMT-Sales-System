@@ -8,8 +8,8 @@ import com.fmt.models.items.EquipmentItem;
 public class PurchasedEquipmentInvoiceItem extends InvoiceItem<EquipmentItem> {
     private final Double purchasePrice;
 
-    public PurchasedEquipmentInvoiceItem(String itemCode, EquipmentItem item, Double purchasePrice) {
-        super(itemCode, item);
+    public PurchasedEquipmentInvoiceItem(String invoiceCode, EquipmentItem item, Double purchasePrice) {
+        super(invoiceCode, item);
         this.purchasePrice = purchasePrice;
     }
 
@@ -26,5 +26,10 @@ public class PurchasedEquipmentInvoiceItem extends InvoiceItem<EquipmentItem> {
     @Override
     public String generateReport() {
         return String.format("%s      (Purchase)  %s %s\n", item.getItemCode(), item.getName(), item.getModel());
+    }
+
+    @Override
+    public boolean saveToDB() {
+        return false;
     }
 }

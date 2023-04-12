@@ -8,8 +8,8 @@ import com.fmt.models.items.ServiceItem;
 public class ServiceInvoiceItem extends InvoiceItem<ServiceItem> {
     private final Double hoursBilled;
 
-    public ServiceInvoiceItem(String itemCode, ServiceItem item, Double hoursBilled) {
-        super(itemCode, item);
+    public ServiceInvoiceItem(String invoiceCode, ServiceItem item, Double hoursBilled) {
+        super(invoiceCode, item);
         this.hoursBilled = hoursBilled;
     }
 
@@ -37,5 +37,10 @@ public class ServiceInvoiceItem extends InvoiceItem<ServiceItem> {
     public String generateReport() {
         return String.format("%s      (Service)  %s\n", item.getItemCode(), item.getName()) +
                 String.format("        %.2f hours @ $ %.2f/hour\n", hoursBilled, item.getHourlyRate());
+    }
+
+    @Override
+    public boolean saveToDB() {
+        return false;
     }
 }
