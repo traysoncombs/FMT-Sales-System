@@ -2,6 +2,7 @@ package com.fmt;
 
 
 import com.fmt.datastore.Datastore;
+import com.fmt.datastore.NewDatastore;
 import com.fmt.models.Invoice;
 import com.fmt.models.Store;
 
@@ -51,6 +52,32 @@ public class ReportGenerator {
         out.append(
                 String.format("%54d          $ %9.2f $ %12.2f\n", totalItems, totalTax, totalCost)
         );
+
+        return out.toString();
+    }
+
+    public String generateReportByOrder(String ordering, Comparator<Invoice> invoiceComparator) {
+        ((NewDatastore)ds).changeInvoiceSorting(invoiceComparator);
+
+        StringBuilder out = new StringBuilder("+----------------------------------------------------------------------------------------+\n" +
+                "| Sales by " + ordering + "                                                                         |\n" +
+                "+----------------------------------------------------------------------------------------+\n" +
+                "Invoice #  Store      Customer                       Sales Person                   Total\n");
+
+        // Generate each invoices summary
+        for (Invoice invoice : ds.getInvoices()) {
+            String summary = String.format(
+                    "%-10s %-10s %-30s %-21s $ %12.2f\n",
+                    invoice.getInvoiceCode(),
+                    invoice.getStoreCode(),
+                    invoice.getCustomer().getLastName() + "," + invoice.getCustomer().getFirstName(),
+                    invoice.getSalesPerson().getLastName() + "," + invoice.getSalesPerson().getFirstName(),
+                    invoice.getGrossCost()
+            );
+            out.append(summary);
+        }
+
+        out.append("+----------------------------------------------------------------------------------------+\n");
 
         return out.toString();
     }

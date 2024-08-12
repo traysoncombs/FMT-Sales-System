@@ -1,0 +1,115 @@
+@startuml
+digraph g {
+    rankdir="TB"
+    splines=polyline
+
+'nodes
+subgraph cluster_101517 {
+   	label=fmt
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+
+   ReportGenerator948522656[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ReportGenerator</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   db: Datastore </TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ generateInvoiceReports(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generateStoreSummary(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generateSummaryReport(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generateReportByOrder(): String</TD></TR>
+
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+subgraph cluster_1759733930 {
+   	label=datastore
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+
+ Datastore1867718057[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)Datastore</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getInvoiceItems(): ArrayList&lt;InvoiceItem&lt;?&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getInvoiceItemsByCode(code: String): ArrayList&lt;InvoiceItem&lt;?&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getInvoices(): ArrayList&lt;Invoice&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getInvoicesByStore(storeCode: String): ArrayList&lt;Invoice&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getItemByCode(code: String): Item</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getItems(): ArrayList&lt;Item&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPeople(): ArrayList&lt;Person&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPersonByCode(code: String): Person</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStores(): ArrayList&lt;Store&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+   LegacyDatastore1867718057[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LegacyDatastore</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   invoiceItems: ArrayList&lt;InvoiceItem&lt;?&gt;&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >-   invoices: ArrayList&lt;Invoice&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >-   items: ArrayList&lt;Item&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >-   people: ArrayList&lt;Person&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >-   stores: ArrayList&lt;Store&gt; </TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getInvoiceItemsByCode(code: String): ArrayList&lt;InvoiceItem&lt;?&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getInvoicesByStore(storeCode: String): ArrayList&lt;Invoice&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getItemByCode(code: String): Item</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPersonByCode(code: String): Person</TD></TR>
+<TR><TD ALIGN="LEFT" >+ importFromCSV(csvFile: String, type: FieldType)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+NewDatastore1867718057[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)NewDatastore</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   invoiceItems: HashMap&lt;String, ArrayList&lt;InvoiceItem&lt;?&gt;&gt;&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >-   invoices: SortedList&lt;Invoice&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >-   items: HashMap&lt;String, Item&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >-   people: HashMap&lt;String, Person&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >-   stores: HashMap&lt;String, Store&gt; </TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getInvoiceItemsByCode(code: String): ArrayList&lt;InvoiceItem&lt;?&gt;&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getInvoicesByStore(storeCode: String): ArrayList&lt;Invoice&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getItemByCode(code: String): Item</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPersonByCode(code: String): Person</TD></TR>
+<TR><TD ALIGN="LEFT" >+ importInvoiceItems()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ importInvoices()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ importItems()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ importPeople()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ importStores()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+}
+}
+
+'edges
+
+LegacyDatastore1867718057 -> NewDatastore1867718057[arrowhead=none];
+ReportGenerator948522656 -> LegacyDatastore1867718057[];
+Datastore1867718057 -> LegacyDatastore1867718057[arrowhead=none, arrowtail=empty, dir=both];
+Datastore1867718057 -> NewDatastore1867718057[arrowhead=none, arrowtail=empty, dir=both];
+
+}
+@enduml

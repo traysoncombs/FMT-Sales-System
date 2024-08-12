@@ -17,6 +17,11 @@ public class Invoice {
     private final String invoiceCode;
     private final String storeCode;
     private final Person customer;
+
+    public Person getSalesPerson() {
+        return salesPerson;
+    }
+
     private final Person salesPerson;
     private final LocalDate invoiceDate;
     private final ArrayList<InvoiceItem<?>> invoiceItems;
@@ -189,6 +194,10 @@ public class Invoice {
 
     public String getInvoiceCode() {
         return invoiceCode;
+    }
+
+    public Person getCustomer() {
+        return customer;
     }
 
     @Override

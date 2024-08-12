@@ -1,0 +1,64 @@
+@startuml
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+
+'nodes 
+subgraph cluster_101517 { 
+   	label=fmt
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1759733930 { 
+   	label=datastore
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Node771390080[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Node&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   item: T </TD></TR>
+<TR><TD ALIGN="LEFT" >-   next: Node&lt;T&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+SortedList1867718057[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SortedList&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   comp: Comparator&lt;T&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >#   head: Node&lt;T&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >#   size: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ add(item: T)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ buildSortedList(data: T[], comp: Comparator&lt;T&gt;): SortedList&lt;T&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getNode(pos: int): Node&lt;T&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ iterator(): Iterator&lt;T&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ remove(item: T)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ remove(pos: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >- removeNextNode(prevNode: Node&lt;T&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ toArray(): T[]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+SortedList1867718057 -> Node771390080[label="head
+"];
+    
+}
+@enduml

@@ -43,23 +43,20 @@ public class SortedList<T> implements Iterable<T>{
         this.comp = comp;
     }
 
-    public static<T> SortedList<T> buildSortedList(T[] data, Comparator<T> comp) {
-        Node<T> head = new Node<>(data[0], null);
-        return null;
-    }
-
     /**
-     * If type T extends comparable we simply create a Comparator that
-     * calls T's compareTo and pass it to the constructor.
+     * Builds sorted list based on comparator from passed array.
      *
-     * TODO: UPDATE THIS AT SOME POINT
-     *
-     * @param data
-     * @return
-     * @param <T>
+     * Note: This runs in O(n^2)
+     * @param data Array
+     * @param comp Comparator
+     * @return SortedList
      */
-    public static<T extends Comparable<T>> SortedList<T> buildSortedList(T[] data) {
-        return buildSortedList(data, Comparator.naturalOrder());
+    public static<T> SortedList<T> buildSortedList(T[] data, Comparator<T> comp) {
+        SortedList<T> sortedList = new SortedList<>(comp);
+        for (T element : data) {
+            sortedList.add(element);
+        }
+        return sortedList;
     }
 
     /**
@@ -85,8 +82,8 @@ public class SortedList<T> implements Iterable<T>{
      * @param item Item
      */
     public void add(T item) {
+        size++;
         if (head == null) {
-            size++;
             head = new Node<>(item, null);
             return;
         }
@@ -116,7 +113,6 @@ public class SortedList<T> implements Iterable<T>{
         // Create new node with item and set it as next.
         Node<T> newNode = new Node<>(item, currentNode);
         prevNode.setNext(newNode);
-        size++;
     }
 
     /**
@@ -200,21 +196,4 @@ public class SortedList<T> implements Iterable<T>{
             return item;
         }
     }
-
-    public static void main(String[] args) {
-        SortedList<Integer> list = new SortedList<Integer>(Comparator.naturalOrder());
-        Random rand = new Random();
-        for (int i = 0; i <= 100; i++) {
-            list.add(rand.nextInt(100));
-        }
-        List<Integer> lst = Arrays.asList(list.toArray());
-
-        for (int i = 0; i < 99; i++) {
-            assert lst.get(i) <= lst.get(i+1);
-        }
-
-        System.out.println(Arrays.toString(list.toArray()));
-
-    }
-
 }

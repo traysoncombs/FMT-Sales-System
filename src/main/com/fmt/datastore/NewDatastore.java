@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -25,15 +27,17 @@ public class NewDatastore implements Datastore {
     private final HashMap<String, Person> people = new HashMap<>();
     private final HashMap<String, Store> stores = new HashMap<>();
     private final HashMap<String, Item> items = new HashMap<>();
-    private final HashMap<String, Invoice> invoices = new HashMap<>();
+    private SortedList<Invoice> invoices;
     private final HashMap<String, ArrayList<InvoiceItem<?>>> invoiceItems = new HashMap<>();
 
     /**
      * Creates a new datastore and imports all necessary data from connectionFactory.
      *
      * @throws SQLException on database error
+     * @param invoiceComparator How invoices should be sorted.
      */
-    public NewDatastore() throws SQLException {
+    public NewDatastore(Comparator<Invoice> invoiceComparator) throws SQLException {
+        this.invoices = new SortedList<>(invoiceComparator);
         this.importPeople();
         this.importItems();
         this.importInvoiceItems();
@@ -203,7 +207,7 @@ public class NewDatastore implements Datastore {
                     Logger.getLogger("fmt").warning("Invoice had null field, excluding it from datastore");
                     continue;
                 }
-                this.invoices.put(invoice.getInvoiceCode(), invoice);
+                this.invoices.add(invoice);
             } catch (SQLException e) {
                 Logger.getLogger("fmt").severe("SQLException occurred while importing invoices.");
                 e.printStackTrace();
@@ -259,6 +263,10 @@ public class NewDatastore implements Datastore {
         rs.close();
     }
 
+    public void changeInvoiceSorting(Comparator<Invoice> invoiceComparator) {
+        this.invoices = SortedList.buildSortedList(this.invoices.toArray(), invoiceComparator);
+    }
+
     @Override
     public Person getPersonByCode(String code) {
         return people.get(code);
@@ -276,9 +284,7 @@ public class NewDatastore implements Datastore {
 
     @Override
     public ArrayList<Invoice> getInvoicesByStore(String storeCode) {
-        return invoices
-                .values()
-                .stream()
+        return Arrays.stream(invoices.toArray())
                 .filter(
                         (invoice) -> invoice.getStoreCode().equals(storeCode)
                 ).collect(Collectors.toCollection(ArrayList::new));
@@ -308,6 +314,6 @@ public class NewDatastore implements Datastore {
 
     @Override
     public ArrayList<Invoice> getInvoices() {
-        return new ArrayList<>(this.invoices.values());
+        return new ArrayList<>(Arrays.asList(this.invoices.toArray()));
     }
 }

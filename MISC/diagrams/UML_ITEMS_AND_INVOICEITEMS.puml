@@ -1,0 +1,258 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.fmt.ReportGenerator",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+
+
+'nodes
+subgraph cluster_101517 {
+   	label=fmt
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+
+subgraph cluster_904348949 {
+   	label=models
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+
+
+Invoice1788277384[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Invoice</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   customer: Person </TD></TR>
+<TR><TD ALIGN="LEFT" >-   invoiceCode: String </TD></TR>
+<TR><TD ALIGN="LEFT" >-   invoiceDate: LocalDate </TD></TR>
+<TR><TD ALIGN="LEFT" >-   invoiceItems: ArrayList&lt;InvoiceItem&lt;?&gt;&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >-   salesPerson: Person </TD></TR>
+<TR><TD ALIGN="LEFT" >-   storeCode: String </TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ fromCSV(csv: String, db: Datastore): Invoice</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fromRow(rs: ResultSet): Invoice</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generateFullReport(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generateSummaryReport(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ saveToDB(): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+InvoiceItem72964457[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)InvoiceItem&lt;T extends Item&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   invoiceCode: String </TD></TR>
+<TR><TD ALIGN="LEFT" >#   item: T </TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ fromCSV(csv: String, db: Datastore): InvoiceItem&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fromRow(rs: ResultSet): InvoiceItem&lt;?&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generateReport(): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Item200022070[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Item</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   itemCode: String </TD></TR>
+<TR><TD ALIGN="LEFT" >#   name: String </TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ fromCSV(csv: String): Item</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fromRow(rs: ResultSet): Item</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+LeasedEquipmentInvoiceItem72964457[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LeasedEquipmentInvoiceItem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   endDate: LocalDate </TD></TR>
+<TR><TD ALIGN="LEFT" >-   fee: Double </TD></TR>
+<TR><TD ALIGN="LEFT" >-   leaseLength: Integer </TD></TR>
+<TR><TD ALIGN="LEFT" >-   startDate: LocalDate </TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ generateReport(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ saveToDB(): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+
+ProductInvoiceItem72964457[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ProductInvoiceItem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   quantity: Double </TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ generateReport(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ saveToDB(): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PurchasedEquipmentInvoiceItem72964457[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PurchasedEquipmentInvoiceItem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   purchasePrice: Double </TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ generateReport(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ saveToDB(): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ServiceInvoiceItem72964457[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ServiceInvoiceItem</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   hoursBilled: Double </TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ generateReport(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ saveToDB(): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Store1788277384[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Store</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   address: Address </TD></TR>
+<TR><TD ALIGN="LEFT" >-   manager: Person </TD></TR>
+<TR><TD ALIGN="LEFT" >-   sales: ArrayList&lt;Invoice&gt; </TD></TR>
+<TR><TD ALIGN="LEFT" >-   storeCode: String </TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ fromCSV(csv: String, db: Datastore): Store</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fromRow(rs: ResultSet): Store</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generateSummary(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ saveToDB(): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+}
+}
+
+'edges
+Invoice1788277384 -> InvoiceItem72964457[];
+InvoiceItem72964457 -> Invoice1788277384[arrowhead=none];
+InvoiceItem72964457 -> Item200022070[arrowhead=none];
+InvoiceItem72964457 -> LeasedEquipmentInvoiceItem72964457[arrowhead=none, arrowtail=empty, dir=both];
+InvoiceItem72964457 -> LeasedEquipmentInvoiceItem72964457[arrowhead=none];
+InvoiceItem72964457 -> ProductInvoiceItem72964457[arrowhead=none, arrowtail=empty, dir=both];
+InvoiceItem72964457 -> ProductInvoiceItem72964457[arrowhead=none];
+InvoiceItem72964457 -> PurchasedEquipmentInvoiceItem72964457[arrowhead=none, arrowtail=empty, dir=both];
+InvoiceItem72964457 -> PurchasedEquipmentInvoiceItem72964457[arrowhead=none];
+InvoiceItem72964457 -> ServiceInvoiceItem72964457[arrowhead=none, arrowtail=empty, dir=both];
+InvoiceItem72964457 -> ServiceInvoiceItem72964457[arrowhead=none];
+InvoiceItem72964457 -> Store1788277384[arrowhead=none];
+Store1788277384 -> Invoice1788277384[];
+
+
+}
+@enduml
