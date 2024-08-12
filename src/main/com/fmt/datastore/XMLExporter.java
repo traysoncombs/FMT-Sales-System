@@ -1,7 +1,5 @@
 package com.fmt.datastore;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 

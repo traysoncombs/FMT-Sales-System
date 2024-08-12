@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * A class to model a person.
  */
-public class Person implements Persistable {
+public class Person {
     private final String personCode;
     private final String lastName;
     private final String firstName;
@@ -116,10 +116,5 @@ public class Person implements Persistable {
     @Override
     public int hashCode() {
         return Objects.hash(personCode, firstName, lastName, address, emails);
-    }
-
-    @Override
-    public boolean saveToDB() {
-        return false;
     }
 }

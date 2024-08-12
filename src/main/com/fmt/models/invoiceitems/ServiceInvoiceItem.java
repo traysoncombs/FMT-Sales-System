@@ -38,9 +38,4 @@ public class ServiceInvoiceItem extends InvoiceItem<ServiceItem> {
         return String.format("%s      (Service)  %s\n", item.getItemCode(), item.getName()) +
                 String.format("        %.2f hours @ $ %.2f/hour\n", hoursBilled, item.getHourlyRate());
     }
-
-    @Override
-    public boolean saveToDB() {
-        return false;
-    }
 }

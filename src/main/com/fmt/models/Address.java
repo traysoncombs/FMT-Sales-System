@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Class to model an address.
  */
-public class Address implements Persistable {
+public class Address {
     private final String street;
     private final String city;
     private final String state;
@@ -84,10 +84,5 @@ public class Address implements Persistable {
     @Override
     public int hashCode() {
         return Objects.hash(street, city, state, zip, country);
-    }
-
-    @Override
-    public boolean saveToDB() {
-        return false;
     }
 }

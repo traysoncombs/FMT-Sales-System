@@ -1,7 +1,6 @@
 package com.fmt.models.invoiceitems;
 
 import com.fmt.datastore.Datastore;
-import com.fmt.models.Persistable;
 import com.fmt.models.items.EquipmentItem;
 import com.fmt.models.items.Item;
 import com.fmt.models.items.ProductItem;
@@ -18,7 +17,7 @@ import java.util.Objects;
  *
  * @param <T>
  */
-public abstract class InvoiceItem<T extends Item> implements Persistable {
+public abstract class InvoiceItem<T extends Item> {
     protected final String invoiceCode;
     protected T item;
 

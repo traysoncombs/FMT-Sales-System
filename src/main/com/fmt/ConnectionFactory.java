@@ -7,22 +7,17 @@ import java.sql.SQLException;
 /**
  * Factory to build connections to a database.
  */
-public class ConnectionFactory {
-    private final String url;
-    private final String username;
-    private final String password;
+public final class ConnectionFactory {
+    private static final String username = "";
+    private static final String password = "";
+    private static final String url = "";
 
-    public ConnectionFactory(String username, String password) {
-        this.username = username;
-        this.password = password;
-        this.url = "jdbc:mysql://cse.unl.edu/" + username + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    }
 
     /**
      * Creates a connection.
      * @return Connection
      */
-    public Connection getConnection() {
+    public static Connection getConnection() {
         try {
             return DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {

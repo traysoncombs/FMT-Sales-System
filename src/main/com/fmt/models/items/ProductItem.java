@@ -36,9 +36,4 @@ public class ProductItem extends Item {
     public int hashCode() {
         return Objects.hash(super.hashCode(), unit, unitPrice);
     }
-
-    @Override
-    public boolean saveToDB() {
-        return false;
-    }
 }

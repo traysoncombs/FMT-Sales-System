@@ -14,10 +14,10 @@ import java.util.logging.Logger;
 
 public class InvoiceReport {
     public static void main(String[] args) {
+
         NewDatastore ds = null;
         try {
-            ConnectionFactory connectionFactory = new ConnectionFactory("tcombs", "5BaxRSal");
-            ds = new NewDatastore(connectionFactory);
+            ds = new NewDatastore();
         } catch (SQLException e) {
             Logger.getLogger("fmt").severe("Error creating datastore");
             e.printStackTrace();

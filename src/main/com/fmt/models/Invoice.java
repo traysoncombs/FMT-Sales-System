@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * A class to model an invoice.
  */
-public class Invoice implements Persistable {
+public class Invoice {
     private final String invoiceCode;
     private final String storeCode;
     private final Person customer;
@@ -202,10 +202,5 @@ public class Invoice implements Persistable {
     @Override
     public int hashCode() {
         return Objects.hash(invoiceCode, storeCode, customer, salesPerson, invoiceDate, invoiceItems);
-    }
-
-    @Override
-    public boolean saveToDB() {
-        return false;
     }
 }

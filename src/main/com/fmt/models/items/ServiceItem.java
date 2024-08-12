@@ -30,9 +30,4 @@ public class ServiceItem extends Item {
     public int hashCode() {
         return Objects.hash(super.hashCode(), hourlyRate);
     }
-
-    @Override
-    public boolean saveToDB() {
-        return false;
-    }
 }

@@ -27,9 +27,4 @@ public class PurchasedEquipmentInvoiceItem extends InvoiceItem<EquipmentItem> {
     public String generateReport() {
         return String.format("%s      (Purchase)  %s %s\n", item.getItemCode(), item.getName(), item.getModel());
     }
-
-    @Override
-    public boolean saveToDB() {
-        return false;
-    }
 }

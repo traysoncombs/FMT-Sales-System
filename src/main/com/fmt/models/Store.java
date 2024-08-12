@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * Class to model a store.
  */
-public class Store implements Persistable {
+public class Store {
     private final String storeCode;
     private final Person manager;
     private final Address address;
@@ -130,10 +130,5 @@ public class Store implements Persistable {
     @Override
     public int hashCode() {
         return Objects.hash(storeCode, manager, address);
-    }
-
-    @Override
-    public boolean saveToDB() {
-        return false;
     }
 }

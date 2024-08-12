@@ -27,16 +27,13 @@ public class NewDatastore implements Datastore {
     private final HashMap<String, Item> items = new HashMap<>();
     private final HashMap<String, Invoice> invoices = new HashMap<>();
     private final HashMap<String, ArrayList<InvoiceItem<?>>> invoiceItems = new HashMap<>();
-    private final ConnectionFactory connectionFactory;
 
     /**
      * Creates a new datastore and imports all necessary data from connectionFactory.
      *
-     * @param connectionFactory instantiated connection factory.
      * @throws SQLException on database error
      */
-    public NewDatastore(ConnectionFactory connectionFactory) throws SQLException {
-        this.connectionFactory = connectionFactory;
+    public NewDatastore() throws SQLException {
         this.importPeople();
         this.importItems();
         this.importInvoiceItems();
@@ -72,7 +69,7 @@ public class NewDatastore implements Datastore {
                 "    Email ON Email.person_id = Person.id " +
                 "GROUP BY Person.id;";
 
-        PreparedStatement ps = connectionFactory.getConnection().prepareStatement(sql);
+        PreparedStatement ps = ConnectionFactory.getConnection().prepareStatement(sql);
         ps.executeQuery();
         ResultSet rs = ps.getResultSet();
 
@@ -105,7 +102,7 @@ public class NewDatastore implements Datastore {
                 "FROM" +
                 "    Item";
 
-        PreparedStatement ps = connectionFactory.getConnection().prepareStatement(sql);
+        PreparedStatement ps = ConnectionFactory.getConnection().prepareStatement(sql);
         ps.executeQuery();
         ResultSet rs = ps.getResultSet();
 
@@ -150,7 +147,7 @@ public class NewDatastore implements Datastore {
                 "        JOIN" +
                 "    Item ON Item.id = InvoiceItem.item_id;";
 
-        PreparedStatement ps = connectionFactory.getConnection().prepareStatement(sql);
+        PreparedStatement ps = ConnectionFactory.getConnection().prepareStatement(sql);
         ps.executeQuery();
         ResultSet rs = ps.getResultSet();
 
@@ -195,7 +192,7 @@ public class NewDatastore implements Datastore {
                 "        JOIN" +
                 "    Person salesperson ON salesperson.id = Invoice.salesperson_id;";
 
-        PreparedStatement ps = connectionFactory.getConnection().prepareStatement(sql);
+        PreparedStatement ps = ConnectionFactory.getConnection().prepareStatement(sql);
         ps.executeQuery();
         ResultSet rs = ps.getResultSet();
 
@@ -241,7 +238,7 @@ public class NewDatastore implements Datastore {
                 "        JOIN" +
                 "    Country ON Country.id = Address.country_id;";
 
-        PreparedStatement ps = connectionFactory.getConnection().prepareStatement(sql);
+        PreparedStatement ps = ConnectionFactory.getConnection().prepareStatement(sql);
         ps.executeQuery();
         ResultSet rs = ps.getResultSet();
 

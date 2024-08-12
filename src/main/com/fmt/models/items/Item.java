@@ -1,7 +1,5 @@
 package com.fmt.models.items;
 
-import com.fmt.models.Persistable;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -9,7 +7,7 @@ import java.util.Objects;
 /**
  * A class that models an invoice item.
  */
-public abstract class Item implements Persistable {
+public abstract class Item {
     protected final String itemCode;
     protected final String name;
 

@@ -45,9 +45,4 @@ public class LeasedEquipmentInvoiceItem extends InvoiceItem<EquipmentItem> {
         return String.format("%s      (Lease)  %s %s\n", item.getItemCode(), item.getName(), item.getModel()) +
                 String.format("        %d days (%s -> %s @ $ %.2f/30 days)\n", leaseLength, startDate.toString(), endDate.toString(), fee);
     }
-
-    @Override
-    public boolean saveToDB() {
-        return false;
-    }
 }

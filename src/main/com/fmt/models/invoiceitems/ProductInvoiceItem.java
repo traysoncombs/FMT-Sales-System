@@ -39,9 +39,4 @@ public class ProductInvoiceItem extends InvoiceItem<ProductItem> {
         return String.format("%s      (Product)  %s\n", item.getItemCode(), item.getName()) +
                 String.format("        %.2f @ $ %.2f/%s\n", quantity, item.getUnitPrice(), item.getUnit());
     }
-
-    @Override
-    public boolean saveToDB() {
-        return false;
-    }
 }
